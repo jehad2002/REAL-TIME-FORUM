@@ -1,9 +1,6 @@
-
 //import { createCommentSection } from '../app.js';
 var  commentData = null;
 export function createComment(post,contentSection, main ) {
-    //const contentSection = document.querySelector('.main-container');
-
     const postElement = document.createElement('div');
     postElement.classList.add('content-comment', 'post-comment', 'post');
 
@@ -29,7 +26,7 @@ export function createComment(post,contentSection, main ) {
             ${category.Icon}<span>${category.Libelle}</span>
         `).join('')}
         ${post.Content ? `<p>${post.Content}</p>` : ''}
-        ${post.ImagePath ? `<img src="/static/uploads/posts/${post.ImagePath}" alt="Image de la publication" class="post-image">` : ''}
+        ${post.ImagePath ? `<img src="/static/uploads/posts/${post.ImagePath}" alt="Post image" class="post-image">` : ''}
         ${post.VideoPath ? `
             <video class="video-container" controls>
                 <source src="/static/uploads/posts/${post.VideoPath}" class="post-video" type="video/mp4">
@@ -82,14 +79,13 @@ export function createComment(post,contentSection, main ) {
             <input type="hidden"  id="parentid"  value="0">
             <input type="hidden"  id="userid"   value="1">
             <input type="hidden"  id="date"   value="">
-            <textarea   id="contenu"  class="comment-input" minlength="2" maxlength="500"  id="textareaFieldd" placeholder="ajouter un commentaire maximum 500 caractere" required></textarea>
+            <textarea id="contenu" class="comment-input" minlength="2" maxlength="500" id="textareaFieldd" placeholder="Add a comment (maximum 500 characters)" required></textarea>
             <div class="comment-button">
                 <button  type="submit">answer</button>
             </div>
         </form>
     </div>`;
 
-    // Créer la section des commentaires
     const commentSection = document.createElement('div');
     commentSection.classList.add('comment-section');
 

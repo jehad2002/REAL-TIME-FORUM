@@ -28,6 +28,10 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	conn, _ := upgrader.Upgrade(w, r, nil)
 	clients = append(clients, *conn)
 
+	//jsonDataChannel := make(chan controllers.Post)
+	//formDataChannel := make(chan *multipart.Form)
+	//done := make(chan bool) // Canal pour signaler la fin des opérations
+
 	go func() {
 		for {
 			msgType, msg, err := conn.ReadMessage()
@@ -127,14 +131,14 @@ func createPost(w http.ResponseWriter, r *http.Request, post Post) {
 	//			ManaginErr(w, http.StatusBadRequest, "File size exceeds 20 MB limit")
 	//		}
 	//	} else {
-	//		fmt.Println("Format , Error: ", http.StatusInternalServerError)
-	//		http.Error(w, "Format ", http.StatusInternalServerError)
+	//		fmt.Println("Format de fichier non pris en charge, Error: ", http.StatusInternalServerError)
+	//		http.Error(w, "Format de fichier non pris en charge", http.StatusInternalServerError)
 	//		return
 	//	}
 	//}
 
-	_, real-time-forum := models.CreatePost(db.OpenDB(), postModel, categories)
-	if real-time-forum != nil {
+	_, test := models.CreatePost(db.OpenDB(), postModel, categories)
+	if test != nil {
 		ManaginErr(w, http.StatusBadRequest, "")
 	}
 	db.OpenDB().Close()
@@ -174,7 +178,6 @@ func UploadsVideo(file multipart.File, header *multipart.FileHeader, extension s
 	}
 	defer newFile.Close()
 
-	// Copy the uploaded file data to the new file
 	_, err = io.Copy(newFile, file)
 	if err != nil {
 		fmt.Println("Unable to copy file data, Error: ", http.StatusInternalServerError)
@@ -227,17 +230,13 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-////////////////////////////////
 
 func notifyNewPost(conn *websocket.Conn, post models.Post) {
-	// Create a message containing information about the new post
 	message := fmt.Sprintf("New post created: %s", post.Title)
 
-	// Send the message to the connected clients
 	err := conn.WriteMessage(websocket.TextMessage, []byte(message))
 	if err != nil {
 		fmt.Println("Error sending WebSocket message:", err)
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////

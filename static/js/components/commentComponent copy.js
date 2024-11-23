@@ -25,7 +25,7 @@ export function createComment(post) {
             ${category.Icon}<span>${category.Libelle}</span>
         `).join('')}
         ${post.Content ? `<p>${post.Content}</p>` : ''}
-        ${post.ImagePath ? `<img src="/static/uploads/posts/${post.ImagePath}" alt="Image de la publication" class="post-image">` : ''}
+        ${post.ImagePath ? `<img src="/static/uploads/posts/${post.ImagePath}" alt="Post image" class="post-image">` : ''}
         ${post.VideoPath ? `
             <video class="video-container" controls>
                 <source src="/static/uploads/posts/${post.VideoPath}" class="post-video" type="video/mp4">
@@ -78,14 +78,13 @@ export function createComment(post) {
             <input type="hidden"  id="parentid"  name="parentID" value="0">
             <input type="hidden"  id="userid"  name="userid" value="1">
             <input type="hidden"  id="date"  name="date" value="">
-            <textarea name="content"  id="contenu"  class="comment-input" minlength="2" maxlength="500"  id="textareaFieldd" placeholder="ajouter un commentaire maximum 500 caractere" required></textarea>
+            <textarea name="content" id="contenu" class="comment-input" minlength="2" maxlength="500" id="textareaFieldd" placeholder="Add a comment (maximum 500 characters)" required></textarea>
             <div class="comment-button">
                 <button  type="submit">answer</button>
             </div>
         </form>
     </div>`;
 
-    // Créer la section des commentaires
     const commentSection = document.createElement('div');
     commentSection.classList.add('comment-section');
 

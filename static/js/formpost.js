@@ -130,7 +130,6 @@ function cancelFormButton() {
 // #############" End script Post form cancel button"
 
 
-// // Ajoutez un gestionnaire d'événements pour le clic sur le lien "Image & Video"
 // function checkToUplioadImageVideo() {
 //     var contentTextareaa = document.querySelector('#textareaField');
 //     var imagevideoLink = document.getElementById("openUploadImVid");
@@ -210,7 +209,7 @@ function ImageVideoDisplay() {
     var deleteButton = createDeleteButton()
     deleteButton.addEventListener('click', () => {
         const fileInput = document.getElementById('fileInput');
-        fileInput.value = ''; // Réinitialisez la valeur du champ à une chaîne vide
+        fileInput.value = ''; 
         previewContainer.remove();
         uploadContainer.style.display = 'block';
     });
@@ -253,9 +252,9 @@ function uploadImage(fileInput) {
 
         xhr.onload = function () {
             if (xhr.status === 200) {
-                console.log("L'image a été téléchargée avec succès !");
+                console.log("The image has been uploaded successfully!");
             } else {
-                console.error("Erreur lors du téléchargement de l'image :", xhr.statusText);
+                console.error("Error during image upload:", xhr.statusText);
             }
         };
         xhr.send(formData);
@@ -264,13 +263,10 @@ function uploadImage(fileInput) {
 
 
 export function FormatDate(dbDate) {
-    // Obtenez la date actuelle
     let currentTime = new Date();
 
-    // Calculez la différence entre les deux dates
     let diff = currentTime - dbDate;
 
-    // Formatez le résultat en conséquence
     let formattedDate;
     if (diff / 3600000 > 24) {
         let days = Math.floor(diff / 86400000);

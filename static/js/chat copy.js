@@ -117,7 +117,6 @@ export async function friendsChat() {
         });
     });
 
-    // Ajoutez un gestionnaire de défilement pour charger plus de messages lorsqu'on atteint le haut du chat
     document.getElementById('chat-messages').addEventListener('scroll', throttledScroll);
 }
 
@@ -126,7 +125,6 @@ function animateElement(element, properties, duration, shouldRemove) {
     const changes = {};
     const startTime = performance.now();
 
-    // Stocke les valeurs de départ
     for (const prop in properties) {
         start[prop] = parseFloat(element.style[prop]) || 0;
         changes[prop] = properties[prop] - start[prop];
@@ -135,24 +133,19 @@ function animateElement(element, properties, duration, shouldRemove) {
         const elapsed = performance.now() - startTime;
         const progress = Math.min(1, elapsed / duration);
 
-        // Applique les changements progressifs
         for (const prop in changes) {
             element.style[prop] = start[prop] + changes[prop] * progress + 'px';
         }
 
-        // Continue l'animation si la durée n'est pas écoulée
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
-            // Fin de l'animation
             if (shouldRemove) {
-                // Supprime l'élément du DOM
                 element.parentNode.removeChild(element);
             }
         }
     }
 
-    // Démarre l'animation
     requestAnimationFrame(update);
 }
 
@@ -188,7 +181,7 @@ function fetchDataChat(destinataire, index, firstLoad) {
             loadChat(data, firstLoad);
         })
         .catch(error => {
-            console.error('Erreur lors de la requête fetch sur chat:', error);
+            console.error('Error during the fetch request on chat:', error);
         });
 }
 
@@ -234,7 +227,6 @@ function checkScroll() {
     const content = document.getElementById('chat-messages');
 
     if (content.scrollTop === 0) {
-        // Si au sommet, charger plus de messages
         loadMoreMessages();
     }
 }
@@ -242,7 +234,6 @@ function checkScroll() {
 const throttledScroll = throttle(checkScroll, 200);
 
 function loadMoreMessages() {
-    // Charger 10 autres messages ici
     var allMessages = document.querySelectorAll('.bubble');
     var index;
     if (allMessages) {

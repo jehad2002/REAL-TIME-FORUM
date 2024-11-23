@@ -2,7 +2,6 @@ function UpdateLike(like) {
     const contentLike = like.querySelector(".like i");
     const contentDisLike = like.querySelector(".dislike i");
 
-    //const likeCount = parseInt(like.querySelector("span").textContent);
     if (contentLike.classList.contains("fa-thumbs-o-up")) {
         let n = Number(like.querySelector(".likeNumber").textContent) + 1;
         like.querySelector(".likeNumber").textContent = n;
@@ -66,7 +65,7 @@ function createInput(parent, commentId) {
             <form method="POST" action="/commentreply" class="open-popup" id="formreply">
                 <input type="hidden" name="PostID" value="${postId}">
                 <input type="hidden" class="commentId" name="parentID" value="${commentId}">
-                <textarea class="comment-input" minlength="2" maxlength="1500" required id="textareaFielddreply"  name="content" placeholder="Faites un commentaire" ></textarea>
+                <textarea class="comment-input" minlength="2" maxlength="1500" required id="textareaFielddreply"  name="content" placeholder="leave a comment" ></textarea>
                 <button type="submit">reply</button>
             </form>
         </div>
@@ -129,12 +128,12 @@ document.addEventListener("click", async (e) => {
                     })
                 });
                 if (response.ok) {
-                    console.log("Nombre de likes mis à jour avec succès.", currentURL);
+                    console.log("Number of likes successfully updated.", currentURL);
                 } else {
-                    console.error("Erreur lors de la mise à jour du nombre de likes.");
+                    console.error("Error while updating the number of likes.");
                 }
             } catch (error) {
-                console.error("Une erreur s'est produite : ", error);
+                console.error("An error occurred: ", error);
             }
         } else if (flag == "comment") {
             try {
@@ -151,9 +150,9 @@ document.addEventListener("click", async (e) => {
                 });
 
                 if (response.ok) {
-                    console.log("Nombre de likes mis à jour avec succès.", currentURL);
+                    console.log("Number of likes successfully updated.", currentURL);
                 } else {
-                    console.error("Erreur lors de la mise à jour du nombre de likes.");
+                    console.error("Error updating the number of likes.");
                 }
             } catch (error) {
                 console.error("Une erreur s'est produite : ", error);
@@ -179,26 +178,24 @@ function CheckInput(mess) {
     customAlert.className = "custom-alert";
     customAlert.innerHTML = mess;
 
-    // Ajoutez un bouton "Fermer" à l'alerte
     var closeButton = document.createElement("span");
-    closeButton.innerHTML = "X"; // Texte pour le bouton de fermeture
+    closeButton.innerHTML = "X"; 
     closeButton.className = "close-button";
     closeButton.addEventListener("click", function () {
-        customAlert.style.display = "none"; // Cachez l'alerte lorsqu'on clique sur "Fermer"
+        customAlert.style.display = "none"; 
     });
     customAlert.appendChild(closeButton);
 
-    // Ajoutez l'alerte personnalisée à la page
     document.body.appendChild(customAlert);
 
-    event.preventDefault(); // Empêche l'envoi du formulaire
+    event.preventDefault(); 
 }
 
 function ReplyAlert() {
     document.getElementById("formreply").addEventListener("submit", function (event) {
         var textarea = document.getElementById("textareaFielddreply").value;
         if (textarea.length > 1500 || textarea.length < 2) {
-            CheckInput("respecter la taille du contenue de votre reponse")
+            CheckInput("respect the size of your response content");
         }
     });
 }

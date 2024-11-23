@@ -1,8 +1,5 @@
-// Fonction pour créer l'élément de formulaire d'inscription
 export function createRegisterElement() {
-    // Créez un élément div pour représenter le formulaire d'inscription
     const registerElement = document.createElement("div");
-    // Ajoutez le contenu du formulaire d'inscription à l'élément div
     registerElement.innerHTML = `
         <span class="close" id="close-signup">&times;</span>
         <div class="container main-container-pop">
@@ -11,7 +8,7 @@ export function createRegisterElement() {
                     <h2>Sign Up Page</h2>
                 </div>
                 <div class="signup">
-                    <form  id="registerForm"> <!-- Ajoutez l'URL de votre backend pour le traitement du formulaire -->
+                    <form  id="registerForm"> 
                         <div class="form-control1">
                             <input type="text" name="name" placeholder="Name" class="tbox" required />
                         </div>

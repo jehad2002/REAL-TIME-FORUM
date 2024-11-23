@@ -1,4 +1,3 @@
-
 import { createPostElement, createPostButton, formPost } from './components/postComponent.js';
 
 document.addEventListener('DOMContentLoaded', (e) => {
@@ -6,7 +5,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
     const postForum = document.getElementById('formPost');
     const postContent = document.querySelector('.profile-create-post')
     if (buttonPostForm) {
-        //console.log(buttonPostForm);
         buttonPostForm.addEventListener('click', function () {
             console.log('test getcontentpost');
             
@@ -16,7 +14,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
 });
 
-// select categories js script
 function toggleCheckboxDropdown() {
     var dropdownContent = document.getElementById("checkbox-dropdown-content");
     dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
@@ -36,8 +33,8 @@ function handleCheckboxChange(checkbox) {
     }
 
     if (!isChecked) {
-        alert("Veuillez sélectionner au moins une catégorie.");
-        checkbox.checked = true; // Empêche de décocher toutes les cases
+alert("Please select at least one category.");
+        checkbox.checked = true; 
     }
 }
 /*/
@@ -94,7 +91,6 @@ export function checkToUploadText() {
             openUpload.style.borderBottom = "1px solid lightgray";
             uploadContainer.style.display = 'none';
             postText.style.borderBottom = "1px solid lightgray";
-            //contentTextarea.style.display = 'block';
             toggleCheckboxDropdown()
             //papaDiv.lastChild.style.display = 'none';
         });
@@ -146,11 +142,6 @@ function cancelFormButton() {
 }
 // #############" End script Post form cancel button"
 
-// Sélectionnez le lien "Image & Video" par son ID
-// Sélectionnez le span du lien "Post" par son ID
-// Sélectionnez le lien "Post" par son ID
-
-// Ajoutez un gestionnaire d'événements pour le clic sur le lien "Image & Video"
 function checkToUplioadImageVideo() {
     var contentTextareaa = document.querySelector('#textareaField');
     var imagevideoLink = document.getElementById("openUploadImVid");
@@ -230,7 +221,7 @@ function ImageVideoDisplay() {
     var deleteButton = createDeleteButton()
     deleteButton.addEventListener('click', () => {
         const fileInput = document.getElementById('fileInput');
-        fileInput.value = ''; // Réinitialisez la valeur du champ à une chaîne vide
+        fileInput.value = ''; 
         previewContainer.remove();
         uploadContainer.style.display = 'block';
     });
@@ -291,7 +282,7 @@ function createDeleteButton() {
 // var socket;
 // export const socketConnect = (func) => {
 //     //alert('in process to connect ...')
-//     socket = new WebSocket("ws://localhost:8080/ws");
+//     socket = new WebSocket("ws://localhost:8888/ws");
 //     console.log(socket);
 //     socket.onopen = function () {
 //         //alert('Status : You CONNECTED')
@@ -354,9 +345,9 @@ function uploadImage(fileInput) {
 
         xhr.onload = function () {
             if (xhr.status === 200) {
-                console.log("L'image a été téléchargée avec succès !");
+                console.log("The image has been uploaded successfully!");
             } else {
-                console.error("Erreur lors du téléchargement de l'image :", xhr.statusText);
+                console.error("Error during image upload:", xhr.statusText);
             }
         };
         xhr.send(formData);
@@ -365,13 +356,10 @@ function uploadImage(fileInput) {
 
 
 export function FormatDate(dbDate) {
-    // Obtenez la date actuelle
     let currentTime = new Date();
 
-    // Calculez la différence entre les deux dates
     let diff = currentTime - dbDate;
 
-    // Formatez le résultat en conséquence
     let formattedDate;
     if (diff / 3600000 > 24) {
         let days = Math.floor(diff / 86400000);

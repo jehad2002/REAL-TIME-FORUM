@@ -1,8 +1,6 @@
-// popup-scripts.js
-
 document.getElementById("open-popup").addEventListener("click", function () {
     document.getElementById("popup").style.display = "block";
-    document.getElementById("popup-signup").style.display = "none"; // Fermer la fenêtre d'inscription si ouverte
+    document.getElementById("popup-signup").style.display = "none"; 
     var checkConnexion = document.getElementById("checkConnexion").textContent
     if (checkConnexion==true) {
         document.getElementById("popup").style.display = "block";
@@ -28,12 +26,12 @@ document.getElementById("cancel-login").addEventListener("click", function () {
 
 document.getElementById("open-popup-signup-link").addEventListener("click", function () {
     document.getElementById("popup-signup").style.display = "block";
-    document.getElementById("popup").style.display = "none"; // Fermer la fenêtre contextuelle de connexion si elle est ouverte
+    document.getElementById("popup").style.display = "none"; 
 });
 
 document.getElementById("open-popup-like").addEventListener("click", function () {
     document.getElementById("popup").style.display = "block";
-    document.getElementById("popup-signup").style.display = "none"; // Fermer la fenêtre d'inscription si ouverte
+    document.getElementById("popup-signup").style.display = "none"; 
 });
 
 document.addEventListener("DOMContentLoaded", (e)=> {
@@ -53,7 +51,7 @@ document.addEventListener("DOMContentLoaded", (e)=> {
     openPopupButtons.forEach(function(button) {
         button.addEventListener("click", function () {
             document.getElementById("popup").style.display = "block";
-            document.getElementById("popup-signup").style.display = "none"; // Fermer la fenêtre d'inscription si ouverte
+            document.getElementById("popup-signup").style.display = "none";
         });
     });
 });
@@ -61,7 +59,7 @@ document.addEventListener("DOMContentLoaded", (e)=> {
 
 document.getElementById("open-popup-signup").addEventListener("click", function () {
     document.getElementById("popup-signup").style.display = "block";
-    document.getElementById("popup").style.display = "none"; // Fermer la fenêtre de connexion si ouverte
+    document.getElementById("popup").style.display = "none"; 
 });
 
 document.getElementById("close-signup").addEventListener("click", function () {
@@ -74,5 +72,5 @@ document.getElementById("cancel-signup").addEventListener("click", function () {
 
 document.getElementById("open-popup-login").addEventListener("click", function () {
     document.getElementById("popup").style.display = "block";
-    document.getElementById("popup-signup").style.display = "none"; // Fermer la fenêtre contextuelle d'inscription si elle est ouverte
+    document.getElementById("popup-signup").style.display = "none"; 
 });

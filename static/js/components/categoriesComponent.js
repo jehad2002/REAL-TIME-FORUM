@@ -1,10 +1,7 @@
 export function createCategoryElement(categories) {
-    // Créez un élément aside pour représenter la liste de catégories
-    
+
     const categoryElement = document.createElement("li");
-    //categoryElement.style.width="auto"
-    //categoryElement.style.height="auto"
-    // Ajoutez la liste de catégories à l'élément aside
+
     categoryElement.innerHTML = `
         <label>
             <input type="checkbox" name="category" class="categoriesCheckbox" value="${categories.Libelle}">

@@ -18,7 +18,7 @@ export async function searchfieldFunc() {
     document.getElementById("sendmessage").querySelector("input").addEventListener("keydown", function(e) {
         if (e.key === 'Enter' && this.value.trim() !== "") {
             sendMessage(this.value.trim());
-            this.value = ''; // Clear input field after sending
+            this.value = ''; 
         }
     });
     
@@ -122,7 +122,6 @@ export async function friendsChat(func) {
         });
     });
     handleResize();
-    // Ajoutez un gestionnaire de défilement pour charger plus de messages lorsqu'on atteint le haut du chat
     document.getElementById('chat-messages').addEventListener('scroll', throttledScroll);
 }
 
@@ -131,11 +130,10 @@ function readMsg(friend) {
    
     if (notificationIcon) {
         notificationIcon.remove();
-        var dest = parseInt( destinataire) ; // Remplacez par l'ID réel de l'utilisateur destinataire
+        var dest = parseInt( destinataire) ; 
         console.log("dest",dest)
         var exp= parseInt (document.getElementById("userID").textContent)
         console.log("exp",exp)
-        // Créez un objet JavaScript avec les données à envoyer
         var requestData = {
             userId: exp,
             senderId: dest
@@ -156,7 +154,6 @@ function readMsg(friend) {
                 return response.json();
             })
             .then(data => {
-                // Gérer la réponse du serveur si nécessaire
             })
             .catch(error => {
                 console.error('Error updating messages status:', error);
@@ -169,7 +166,6 @@ function animateElement(element, properties, duration, shouldRemove) {
     const changes = {};
     const startTime = performance.now();
 
-    // Stocke les valeurs de départ
     for (const prop in properties) {
         start[prop] = parseFloat(element.style[prop]) || 0;
         changes[prop] = properties[prop] - start[prop];
@@ -178,18 +174,14 @@ function animateElement(element, properties, duration, shouldRemove) {
         const elapsed = performance.now() - startTime;
         const progress = Math.min(1, elapsed / duration);
 
-        // Applique les changements progressifs
         for (const prop in changes) {
             element.style[prop] = start[prop] + changes[prop] * progress + 'px';
         }
 
-        // Continue l'animation si la durée n'est pas écoulée
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
-            // Fin de l'animation
             if (shouldRemove) {
-                // Supprime l'élément du DOM
                 console.log('element.parentNode ', element);
                 if (element.parentNode) {
                     element.parentNode.removeChild(element);
@@ -198,7 +190,6 @@ function animateElement(element, properties, duration, shouldRemove) {
         }
     }
 
-    // Démarre l'animation
     requestAnimationFrame(update);
 }
 
@@ -206,11 +197,10 @@ export function chatElement(data) {
     var UserId = document.getElementById('userID').textContent
     var div = document.createElement('div');
 
-    // Ajoutez une classe différente en fonction de l'expéditeur
     if (data.Expediteur == UserId) {
-        div.classList.add('message', 'right', 'sender'); // Classe 'sender' pour les messages du sender
+        div.classList.add('message', 'right', 'sender'); 
     } else {
-        div.classList.add('message', 'receiver'); // Classe 'receiver' pour les messages du receiver
+        div.classList.add('message', 'receiver'); 
     }
 
     console.log("aD;LK", data.Date)
@@ -250,7 +240,7 @@ function fetchDataChat(destinataire, index, firstLoad) {
             }
         })
         .catch(error => {
-            console.error('Erreur lors de la requête fetch sur chat:', error);
+            console.error('Error during the fetch request on chat:', error);
         });
 }
 
@@ -260,7 +250,7 @@ function loadChat(data, firstLoad) {
 
     if (firstLoad === 'true') {
         content.innerHTML = '';
-        scrollToBottom = true; // Set to true after adding a new message
+        scrollToBottom = true;
     }
 
     const keys = Object.keys(data);
@@ -305,14 +295,12 @@ function checkScroll() {
     const content = document.getElementById('chat-messages');
 
     if (content.scrollTop === 0) {
-        // Si au sommet, charger plus de messages
         loadMoreMessages();
     }
 }
 
 const throttledScroll = throttle(checkScroll, 200);
 
-// Ajouter le gestionnaire de défilement à l'élément content
 
 function displayChatContent() {
     if (document.getElementById('chatbtn')) {
@@ -339,16 +327,13 @@ function resetChatContent(windowWidth) {
     }
     document.querySelector('.seachbar').style.display = 'flex';
     document.getElementById('chatbtn').style.display = 'none';
-    console.log('Réinitialisation du contenu du chat...');
+    console.log('Resetting the chat content...');
 }
 
 function handleResize() {
-    // Récupérer la largeur de la fenêtre du navigateur
     windowWidth = window.innerWidth;
-    //var ul = document.querySelector('.category-list')
     var btn = document.querySelector('.menu-button ')
     var main = document.querySelector('.main-container')
-    // Vérifier la largeur et appeler la fonction appropriée
     if (windowWidth <= 768) {
         document.querySelector('.seachbar').style.display = 'none';
         document.getElementById('chatbtn').style.display = 'block';
@@ -362,20 +347,16 @@ function handleResize() {
     }
 }
 
-// Appeler la fonction handleResize lors du chargement initial de la page
-// Ajouter un écouteur d'événements pour la redimension de la fenêtre
 window.addEventListener('resize', handleResize);
 
 
 function loadMoreMessages() {
-    // Utilisez la variable destinataire ici
     var allMessages = document.querySelectorAll('.bubble');
     var index;
     if (allMessages) {
         index = allMessages.length - 1;
     }
 
-    // Convertissez l'index en chaîne avant de l'ajouter au payload
     fetchDataChat(destinataire, (index + 1).toString(), 'false');
 }
 function sendMessage(messageContent) {
@@ -395,11 +376,9 @@ function sendMessage(messageContent) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Handle message sent success
             console.log("Message sent successfully!");
-            loadChat(data, 'false');  // Assuming this loads the new message into the chat
+            loadChat(data, 'false'); 
         } else {
-            // Handle error
             console.error("Error sending message:", data.error);
         }
     })

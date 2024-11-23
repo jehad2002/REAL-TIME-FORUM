@@ -1,9 +1,7 @@
 export function createHeaderElement(name, userID, func) {
     var body = document.querySelector('body')
-    // Créez un élément header pour représenter la section d'informations du pied de page
     const headerInfoElement = document.createElement("header");
 
-    // Ajoutez le contenu de la section d'informations à l'élément header
     headerInfoElement.innerHTML = `
     <div class="logo">
       <img src="/static/image/forum.jpg" alt="Zone01 Logo"> 
@@ -39,15 +37,8 @@ export function createHeaderElement(name, userID, func) {
         </div>
     `;
 
-    // Remplacez l'ancien header par le nouvel élément header
-    //const oldHeader = document.getElementById("headerSection");
-    //const oldHeader = document.createElement('header')
     headerInfoElement.id = 'headerSection'
-    //if (oldHeader) {
-    //oldHeader.parentNode.replaceChild(headerInfoElement, oldHeader);
-    //oldHeader.appendChild(headerInfoElement);
-    //body.appendChild(oldHeader)
+
     body.insertBefore(headerInfoElement, body.firstChild);
-    //}
     func()
 }

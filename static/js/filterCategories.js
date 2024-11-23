@@ -1,6 +1,5 @@
 export function filterByCategories() {
-  // Check if the device supports touch events
-  // Get all checkboxes with the class "categoriesCheckbox"
+
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 
   if (isTouchDevice) {
@@ -13,17 +12,13 @@ export function filterByCategories() {
   }
   const checkboxes = document.querySelectorAll(".categoriesCheckbox");
 
-  // Get all cards with the class "card"
   const cards = document.querySelectorAll(".card");
 
-  // Add a change event listener to each checkbox
   var selectedCategory = [];
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", (event) => {
       console.log('checked');
-      // Get the value of the clicked checkbox
       const clickedCategory = event.target.value;
-      // Check if the checkbox is checked
       if (event.target.checked) {
         selectedCategory.push(clickedCategory);
       } else {
@@ -43,7 +38,6 @@ export function filterByCategories() {
 
         });
         selectedCategory.forEach((cat) => {
-          // Check if the card contains the selected category in its text content
           if (catArray.includes(cat) || cat === "all") {
             listParents.push(card.parentElement);
             // card.parentElement.classList.remove("hide");

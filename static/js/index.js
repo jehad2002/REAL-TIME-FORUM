@@ -13,13 +13,9 @@ export function displayMenuButton() {
 //);
 
 //$(document).ready(function () {
-//    // Lorsque le bouton "Reply" est cliqué
 //    $(document).on("click", ".reply-button", function () {
-//        // Récupérer l'ID du commentaire à partir de l'attribut data-comment-id
 //        var commentID = $(this).attr("data-comment-id");
-//        // Trouver le formulaire de réponse associé au commentaire spécifique
 //        var replyForm = $(".comment[data-comment-id='" + commentID + "']").find(".reply-form");
-//        // Afficher ou cacher le formulaire
 //        replyForm.toggleClass("hidden");
 //    });
 //});
@@ -41,35 +37,26 @@ window.addEventListener("resize", () => {
     }
 });
 
-    // Supposons que vous avez des liens de catégorie avec des classes ".category-link" et des publications avec des classes ".post-item".
 document.querySelectorAll('.category-link').forEach((link) => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
-        const selectedCategory = link.getAttribute('data-category'); // Obtenez la catégorie sélectionnée
-
-        // Cacher toutes les publications en ajoutant la classe "hidden"
+        const selectedCategory = link.getAttribute('data-category'); 
         document.querySelectorAll('.post-item').forEach((post) => {
             post.classList.add('hidden');
         });
 
-        // Afficher les publications de la catégorie sélectionnée en retirant la classe "hidden"
         document.querySelectorAll(`.post-item[data-category="${selectedCategory}"]`).forEach((post) => {
             post.classList.remove('hidden');
         });
     });
 });
 
-// Sélectionnez tous les boutons "Voir les réponses"
 const showRepliesButtons = document.querySelectorAll(".show-replies-button");
 
-// Parcourez chaque bouton et vérifiez si le commentaire parent a des enfants
 showRepliesButtons.forEach(button => {
-    // Sélectionnez le commentaire parent
     const parentComment = button.closest(".comment");
-    // Sélectionnez la liste des sous-commentaires
     const subCommentsList = parentComment.querySelector(".sub-comments");
-    //console.log(parentComment.nextElementSibling);
-    // Si la liste des sous-commentaires existe et contient des éléments, montrez le bouton
+
     if (parentComment.nextElementSibling) {
         button.style.display = "inline-block";
         parentComment.nextElementSibling.style.display="none";

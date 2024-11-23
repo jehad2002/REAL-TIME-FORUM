@@ -1,10 +1,7 @@
-// Fonction pour créer l'élément de formulaire de login
 export function createLoginElement() {
-    // Créez un élément div pour représenter le formulaire de login
     const loginElement = document.createElement("div");
     loginElement.classList.add("container", "main-container-pop");
 
-    // Ajoutez le contenu du formulaire de login à l'élément div
     loginElement.innerHTML = `
         <div class="login-box">
             <div class="header">
@@ -16,10 +13,10 @@ export function createLoginElement() {
                         <input type="text"  placeholder="UserName" class="tbox" id="loginUsername" required />
                     </div>
                     <div class="form-control1">
-                        <input type="password" placeholder="Password" class="tbox" title="Seuls les lettres majuscules, les lettres minuscules, les chiffres et les caractères spéciaux sont autorisés" id="loginPassword" required />
+                    <input type="password" placeholder="Password" class="tbox" title="Only uppercase letters, lowercase letters, numbers, and special characters are allowed" id="loginPassword" required />
                     </div>
                     <div id="login-error" style="display: none; color: red;">
-                        Mot de passe ou username incorrect
+                    Incorrect password or username
                     </div>
                     <div class="form-control1">
                         <input type="submit" value="Login Now" class="btn" />

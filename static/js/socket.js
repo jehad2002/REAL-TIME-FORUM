@@ -61,31 +61,29 @@ export function getContentPost() {
         const fileInput = document.querySelector('.UploadImVid input');
         const userID = Number(document.querySelector('#userID').textContent);
 
-        // Vérifier la longueur du titre et du contenu du post
         if (titlePost.value.length > 100) {
-            CheckInput('Le titre ne doit pas dépasser 100 caractères.');
-            return; // Ne pas envoyer le post si la condition n'est pas satisfaite
+            CheckInput('The title must not exceed 100 characters.');
+            return; 
         }
         if (titlePost.value.length < 3) {
-            CheckInput('Le titre doit avoir au moins 5 caractères.');
-            return; // Ne pas envoyer le post si la condition n'est pas satisfaite
+            CheckInput('The title must be at least 5 characters long.');
+            return; 
         }
 
         if (contentPost.value.length > 1500) {
-            CheckInput('Le contenu ne doit pas avoir plus de 15000 caractères.');
-            return; // Ne pas envoyer le post si la condition n'est pas satisfaite
+            CheckInput('The content must not exceed 15,000 characters.');
+            return;
         }
 
         if (contentPost.value.length < 5) {
-            CheckInput('Le contenu doit avoir au moins 5 caractères.');
-            return; // Ne pas envoyer le post si la condition n'est pas satisfaite
+            CheckInput('The content must be at least 5 characters long.');
+            return; 
         }
 
-        // Vérifier si au moins une catégorie a été cochée
         const selectedCategories = handleCheckboxChange()[1];
         if (selectedCategories.length === 0) {
-            CheckInput('Veuillez sélectionner au moins une catégorie.');
-            return; // Ne pas envoyer le post si la condition n'est pas satisfaite
+            CheckInput('Please select at least one category.');
+            return; 
         }
 
         var idpost = document.querySelectorAll('post').length +1
@@ -132,15 +130,14 @@ export function getContentComment() {
         }
         const contentValue = content.value;
 
-        // Vérifier la longueur du contenu du commentaire
         if (contentValue.length > 500) {
-            CheckInput('Le commentaire ne doit pas dépasser 500 caractères.');
-            return; // Ne pas envoyer le commentaire si la condition n'est pas satisfaite
+            CheckInput('The comment must not exceed 500 characters.');
+            return; 
         }
 
         if (contentValue.length < 2) {
-            CheckInput('Le commentaire doit  dépasser 1 caractère.');
-            return; // Ne pas envoyer le commentaire si la condition n'est pas satisfaite
+            CheckInput('The comment must be longer than 1 character.');
+            return; 
         }
 
         const postID = document.getElementById('postid').value;
@@ -178,7 +175,6 @@ function getUsername() {
 
 function handleMessage(data, func) {
     if (data.action === "userStatusUpdate") {
-        // Mettez à jour le statut de l'utilisateur dans l'interface utilisateur
         updateFriendStatus(data.userID, data.status);
     } else if (data.Action === CREATE_POST_ACTION) {
         const element = func(data);
@@ -193,23 +189,18 @@ function handleMessage(data, func) {
             fetchCommentPost(Number(btn.id))
         })
     } else if (data.Action === CHAT_ACTION) {
-        // var expediteur = document.getElementById(data.Expediteur);
         var destinataire = document.querySelector(".friend" + String(data.Destinataire))
         var expediteurNotify = document.querySelector(".friend" + String(data.Expediteur));
         var parent;
         if (expediteurNotify && data.Istyping !== 'true' && data.Contenu != '') {
             notificationNumber++
             var existingNotificationIcon = expediteurNotify.querySelector('.notification-icon');
-            // Si l'icône de notification existe déjà, mettez à jour son contenu
             if (existingNotificationIcon) {
                 var existingNotificationContent = existingNotificationIcon.innerHTML;
-                // Ajouter 1 au contenu existant (assumant que le contenu existant est un nombre)
                 var notificationNumber = parseInt(existingNotificationContent) + 1;
-                // Mettre à jour le contenu de l'icône de notification
                 existingNotificationIcon.innerHTML = `${notificationNumber} <i class="fas fa-envelope"></i>`;
             } else {
                 notificationNumber = 1
-                // Sinon, ajoutez une nouvelle icône de notification
                 expediteurNotify.insertAdjacentHTML('beforeend', `<span  style="color:blue;"class="notification-icon">${notificationNumber} <i class="fas fa-envelope"></i></span>`);
             }
             parent = expediteurNotify.parentNode;
@@ -296,10 +287,8 @@ function socketChatSend(content, metadata) {
 
 
 function CheckInput(mess) {
-    // Vérifier si l'alerte existe déjà
     var existingAlert = document.querySelector('.custom-alert');
 
-    // Si elle existe, la supprimer
     if (existingAlert) {
         existingAlert.remove();
     }
@@ -308,19 +297,17 @@ function CheckInput(mess) {
     customAlert.className = "custom-alert";
     customAlert.innerHTML = mess;
 
-    // Ajoutez un bouton "Fermer" à l'alerte
     var closeButton = document.createElement("span");
-    closeButton.innerHTML = "X"; // Texte pour le bouton de fermeture
+    closeButton.innerHTML = "X"; 
     closeButton.className = "close-button";
     closeButton.addEventListener("click", function () {
-        customAlert.style.display = "none"; // Cachez l'alerte lorsqu'on clique sur "Fermer"
+        customAlert.style.display = "none"; 
     });
     customAlert.appendChild(closeButton);
 
-    // Ajoutez l'alerte personnalisée à la page
     document.body.appendChild(customAlert);
 
-    event.preventDefault(); // Empêche l'envoi du formulaire
+    event.preventDefault(); 
 }
 
 function updateFriendStatus(userID, status) {
@@ -349,7 +336,7 @@ function IsTyping() {
         'Destinataire': parseInt(destinataire),
         'Contenu': '',
         'Image': '',
-        'Istyping': 'false', // Initialisez à 'false'
+        'Istyping': 'false', 
     };
 
     var input = document.querySelector('#sendmessage input');

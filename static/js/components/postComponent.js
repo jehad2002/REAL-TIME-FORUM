@@ -1,9 +1,7 @@
 export function createPostElement(post) {
-    // Créez un élément div pour représenter une publication
     const postElement = document.createElement("div");
     postElement.classList.add("post");
 
-    // Ajoutez le contenu de la publication à l'élément div
     postElement.innerHTML = `
         <div class="user-info-post">
             <div class="user-icon">
@@ -25,7 +23,7 @@ export function createPostElement(post) {
             `).join('')}
         </div>
         ${post.Content ? `<p>${post.Content}</p>` : ''}
-        ${post.ImagePath ? `<img src="/static/uploads/posts/${post.ImagePath}" alt="Image de la publication" class="post-image">` : ''}
+        ${post.ImagePath ? `<img src="/static/uploads/posts/${post.ImagePath}" alt="Post image" class="post-image">` : ''}
         ${post.VideoPath ? `
             <video class="video-container" controls>
                 <source src="/static/uploads/posts/${post.VideoPath}" class="post-video" type="video/mp4">

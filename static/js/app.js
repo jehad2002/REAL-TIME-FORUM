@@ -2,26 +2,25 @@ import { createPostElement, createPostButton, formPost } from './components/post
 import { createCategoryElement, createButtonCategoryElement } from './components/categoriesComponent.js';
 import { createFooterElement } from './components/chatComponent.js';
 import { createHeaderElement } from './components/headerComponent.js';
-import { createLoginElement } from './components/loginComponent.js';  // Assurez-vous d'importer la fonction de création du formulaire de login
-import { createRegisterElement } from './components/registerComponent.js';  // Assurez-vous d'importer la fonction de création du formulaire de login
-import { createErrorPage } from './components/errorComponent.js';  // Assurez-vous d'importer la fonction de création du formulaire de login
+import { createLoginElement } from './components/loginComponent.js';  
+import { createRegisterElement } from './components/registerComponent.js';  
+import { createErrorPage } from './components/errorComponent.js';  
 import { checkToUploadText } from './formpost.js';
 import { displayMenuButton } from './index.js';
 import { filterByCategories } from './filterCategories.js';
 import { getContentPost, getContentComment, socketConnect, getContentChat, allElementPost } from './socket.js';
 import { searchfieldFunc, friendsChat, windowWidth } from './chat.js';
-import { createComment } from './components/commentComponent.js';  // Assurez-vous d'importer la fonction de création du formulaire de login
+import { createComment } from './components/commentComponent.js'; 
 var commentData = null;
 var connectedUserName;
 var connectedUserId;
 var body = document.querySelector('body')
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Vérifiez si l'URL est différente de http://localhost:8080/
-    if (window.location.href == "http://localhost:8080/") {
-        // Chargez la page de login au chargement de la page
+    // http://localhost:8888/
+    if (window.location.href == "http://localhost:8888/") {
         checkSessionOnLoad();
-    } else if (window.location.href !== "http://localhost:8080/comment") {
+    } else if (window.location.href !== "http://localhost:8888/comment") {
         fetch("/check_session")
         .then(response => response.json())
         .then(data => {
@@ -29,20 +28,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 socketConnect(createPostElement);
                 const url = new URL(window.location.href);
                 const postId = Number(url.searchParams.get("postId"));
-                // Chargez les publications et les catégories
                 fetchCommentPost(postId, data);
             } else {
-            // Si la session n'est pas valide, chargez la page de connexion
             console.log('login page');
                 loadLoginPage();
             }
         })
         .catch(error => {
-            console.error("Erreur lors de la vérification de la session:", error);
-            // En cas d'erreur, chargez la page de connexion par défaut
+            console.error("Error checking the session:", error);
         });
     } else {
-        // Chargez la page d'erreur 404
         loadErrorPage();
     }
 });
@@ -52,25 +47,20 @@ function loadErrorPage() {
     fetch("/404")
     .then(response => {
         if (response.ok) {
-            // Le serveur a répondu avec succès (code 2xx)
-            return response.text(); // ou response.json() selon le contenu de la page
+            return response.text(); 
         } else {
-            // Gérez d'autres codes d'erreur ici si nécessaire
-            throw new Error(`Erreur HTTP ${response.status}`);
+            throw new Error(`Error HTTP ${response.status}`);
         }
     })
     .then(data => {
-        // Traitez la réponse réussie ici
         console.log(data);
     })
     .catch(error => {
-        console.error("Erreur lors de la requête:", error);
+        console.error("Error during the request:", error);
     });
-    // Chargez la page d'erreur 404 en utilisant la fonction createErrorPage
     const errorContainer= document.createElement('div')
     errorContainer.id = 'login-error'
     createErrorPage(404, "Page Not Found", "The requested page could not be found.", errorContainer);
-    // Annulez le chargement d'autres éléments en utilisant un return
     return;
 }
 
@@ -79,7 +69,7 @@ function handleLogout() {
     if (logoutButton) {
         logoutButton.addEventListener("click", () => {
             fetch("/logout", {
-                method: "POST", // Use the appropriate HTTP method for your logout endpoint
+                method: "POST", 
             })
                 .then(response => {
                     if (response.ok) {
@@ -109,36 +99,28 @@ function backBtn() {
 }
 
 function checkSessionOnLoad() {
-    // Envoyez une requête au serveur pour vérifier la session
     fetch("/check_session")
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 loadContentPage(data, loadPosts)
             } else {
-                // Si la session n'est pas valide, chargez la page de connexion
                 loadLoginPage();
             }
         })
         .catch(error => {
-            console.error("Erreur lors de la vérification de la session:", error);
-            // En cas d'erreur, chargez la page de connexion par défaut
+            console.error("Error during session verification:", error);
             loadLoginPage();
         });
 }
 
 export function loadLoginPage() {
-    // Créer l'élément de formulaire de connexion
     const loginElement = createLoginElement();
-    // Ajouter l'élément de formulaire de connexion à la section principale
     body.appendChild(loginElement);
-    // Ajoutez un gestionnaire d'événements pour le formulaire de login
     const loginForm = document.getElementById("loginForm");
     loginForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Empêche le formulaire de se soumettre normalement
         var username = getUserInfos()[0]
         var password = getUserInfos()[1]
-        // Envoyez les données de connexion au serveur
         fetch("/login", {
             method: "POST",
             headers: {
@@ -148,12 +130,10 @@ export function loadLoginPage() {
         })
             .then(response => response.json())
             .then(data => {
-                // Vérifiez la réponse du serveur
                 if (data.success) {
                     body.removeChild(loginElement)
                     loadContentPage(data, loadPosts)
                 } else {
-                    // Affichez un message d'erreur, par exemple :
                     const loginError = document.getElementById("login-error");
                     if (loginError) {
                         loginError.style.display = "block";
@@ -161,23 +141,21 @@ export function loadLoginPage() {
                 }
             })
             .catch(error => {
-                console.error("Erreur lors de la connexion:", error);
+                console.error("Error during connection:", error);
             });
         });
-    // Ajoutez un gestionnaire d'événements pour le lien d'inscription
     const openPopupSignupLink = document.getElementById("open-popup-signup-link");
     if (openPopupSignupLink) {
-        console.log("okokokoko")
+        console.log("ok")
         openPopupSignupLink.addEventListener("click", function (event) {
             event.preventDefault();
-            // Chargez le formulaire d'inscription à la place du formulaire de connexion
             if (loginElement) {
                 body.removeChild(loginElement)
             }
             loadRegisterPage();
         });
     } else {
-        console.log("vlvsd;lvd;f")
+        console.log("wrong")
     }
 }
 
@@ -217,23 +195,19 @@ function loadContentPage(data, func, isComment) {
     backBtn()
     func(postContainer, data, main);
 
-    // Insérez la section des catégories avant le postContainer
     loadCategories(postContainer, isComment);
-    // Insérez le postContainer dans la section principale
     main.appendChild(postContainer);
 }
 
 
 export function loadRegisterPage() {
-    // Créer l'élément de formulaire d'inscription
     const registerElement = createRegisterElement();
     body.appendChild(registerElement);
     const registerForm = document.getElementById("registerForm");
     if (registerForm) {
         registerForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Empêche le formulaire de se soumettre normalement
+            event.preventDefault(); 
     
-            // Récupérez les valeurs des champs du formulaire d'inscription
             const nameElement = document.querySelector('input[name="name"]');
             const usernameElement = document.querySelector('input[name="username"]');
             const emailElement = document.querySelector('input[name="email"]');
@@ -253,18 +227,16 @@ export function loadRegisterPage() {
                 const firstName = firstNameElement.value.trim();
                 const lastName = lastNameElement.value.trim();
     
-                // Vérifier si les champs username, lastname, et name ne contiennent pas d'espaces
                 if (!username || !lastName || !name || !firstName || !email) {
                     const registerError = document.getElementById("register-error");
                     if (registerError) {
                         registerError.style.color = "red";
-                        registerError.innerText = "Les champs 'username', 'lastname' et 'name' ne doivent pas contenir d'espaces.";
+                        registerError.innerText = "The fields 'username', 'lastname', and 'name' must not contain spaces.";
                         registerError.style.display = "block";
-                        return; // Arrêtez le traitement car la validation a échoué
+                        return; 
                     }
                 }
     
-                // Envoyez les données au backend via une requête fetch
                 fetch("/register", {    
                     method: "POST",
                     headers: {
@@ -274,33 +246,29 @@ export function loadRegisterPage() {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        // Vérifiez la réponse du serveur
                         if (data.success) {
-                            // Affichez un message de succès
                             const registerError = document.getElementById("register-error");
                             if (registerError) {
                                 registerError.style.display = "block";
                                 registerError.style.color = "green";
-                                registerError.textContent = "Inscription réussie";
+                                registerError.textContent = "Registration successful";
                             }
                         } else {
-                            // Afficher un message d'erreur en cas d'échec
                             const registerError = document.getElementById("register-error");
                             if (registerError) {
                                 registerError.style.color = "red";
-                                registerError.innerHTML = "Erreur lors de l'inscription: " + data.message;
+                                registerError.innerHTML = "Registration error: " + data.message;
                                 registerError.style.display = "block";
                             }
                         }
                     })
                     .catch(error => {
-                        console.error("Erreur lors de l'envoi de la requête:", error);
+                        console.error("Error sending the request:", error);
                     });
             } else {
-                // Les champs du formulaire d'inscription ne sont pas disponibles, affichez un message d'erreur
                 const registerError = document.getElementById("register-error");
                 if (registerError) {
-                    registerError.innerText = "Veuillez ne pas changer mon ID";
+                    registerError.innerText = "Please do not change my ID";
                     registerError.style.display = "block";
                 }
             }
@@ -308,7 +276,6 @@ export function loadRegisterPage() {
     }
     
 
-    // Ajoutez un gestionnaire d'événements pour le lien de connexion
     const openPopupLoginLink = document.getElementById("open-popup-login");
     if (openPopupLoginLink) {
         openPopupLoginLink.addEventListener("click", function (event) {
@@ -316,7 +283,6 @@ export function loadRegisterPage() {
             if (registerElement) {
                 body.removeChild(registerElement)
             }
-            // Chargez le formulaire de connexion à la place du formulaire d'inscription
             loadLoginPage();
         });
     }
@@ -336,17 +302,14 @@ if (logoutForm) {
         })
             .then(response => response.json())
             .then(data => {
-                // Gérez la réponse du serveur
                 if (data.success) {
-                    // Affichez de nouveau la page de connexion
                     loadLoginPage();
                 } else {
-                    // En cas d'erreur, affichez un message ou effectuez une autre action
-                    console.error("Erreur lors de la déconnexion:", data.message);
+                    console.error("Error during logout:", data.message);
                 }
             })
             .catch(error => {
-                console.error("Erreur lors de la déconnexion:", error);
+                console.error("Error during logout:", error);
             });
     });
 }
@@ -357,28 +320,26 @@ function loadPosts(postContainer, data) {
     fetch("/get_all_posts")
         .then(response => response.json())
         .then(posts => {
-            // Mettez à jour le contenu de la page avec les nouvelles publications
             allposts = posts
             updatePageContent(posts, postContainer);
             socketConnect(createPostElement);
             filterByCategories();
             displayMenuButton();
         })
-        .catch(error => console.error("Erreur de récupération des publications:", error));
-}
+        .catch(error => console.error("Error fetching posts:", error));
+    }
 
 function loadCategories(postcontainer, isComment) {
     fetch("/get_asside_content")
         .then(response => response.json())
         .then(assideContent => {
-            // Mettez à jour le contenu de la page avec les nouvelles catégories
             updateCategories(assideContent.Cat, postcontainer, isComment);
-            updateFooter(assideContent.Use); // Passez les catégories au footer
+            updateFooter(assideContent.Use); 
             searchfieldFunc()
             friendsChat(getContentChat)
         })
-        .catch(error => console.error("Erreur de récupération des catégories:", error));
-}
+        .catch(error => console.error("Error fetching categories:", error));
+    }
 
 var allPostElement
 function updatePageContent(posts,postContainer) {
@@ -406,7 +367,6 @@ function listenCommentButton(posts) {
     currentPosts.forEach(postElement => {
         const commentButton = postElement.querySelector('.comment');
 
-        // Ajoutez un gestionnaire d'événements pour le clic sur le bouton (avec vérification)
         if (commentButton) {
             commentButton.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -449,7 +409,7 @@ export function fetchCommentPost(postId, datas) {
                 //socketConnect(createCommentSection);
             })
             .catch(error => {
-                console.error('Erreur lors de l\'envoi de la requête:', error);
+                console.error('Error sending the request:', error);
             });
     } else {
         loadErrorPage();
@@ -485,10 +445,8 @@ function updateCategories(categories, postContainer, isComment) {
 
     categoriesContainer.appendChild(categoryElement);
 
-    // Insérez le conteneur des catégories avant le postContainer
     document.querySelector('main').insertBefore(categoriesContainer, postContainer);
 
-    // Insertion conditionnelle du conteneur de commentaires
     if (!isComment) {
         var createPostButton = postContainer.querySelector('.profile-create-post');
         if (postContainer && createPostButton) {
@@ -506,7 +464,7 @@ function updateFooter(users) {
 
 function checkBtnCreatePost(postContainer) {
     const buttonPostForm = postContainer.querySelector('.create_post');
-    console.log('voici le postcontainer ');
+    console.log('Here is the post container');
     if (buttonPostForm) {
         console.log('on recupere le bouton create post');
         //console.log(buttonPostForm);
@@ -520,20 +478,16 @@ function checkBtnCreatePost(postContainer) {
     }
 }
 
-//commentaire
 
 export function createCommentSection(postContainer, comments, main) {
-    // Vérifiez si comments est défini, n'est pas une chaîne vide et qu'il a une méthode forEach
     if (comments && Array.isArray(comments) && comments.length > 0) {
-        // Ajoutez les commentaires à la section de commentaires
         comments.forEach(comment => {
            createComment(comment, postContainer, main);
         });
     } else {
-        console.error("La variable 'comments' est vide ou n'est pas un tableau.");
-        // Ajoutez un élément vide à postContainer
+        console.error("The variable 'comments' is empty or not an array.");
         const emptyPostElement = document.createElement('div');
-        emptyPostElement.innerHTML = "Aucun commentaire disponible.";
+        emptyPostElement.innerHTML = "No comments available.";
         postContainer.appendChild(emptyPostElement);
     }
     getContentComment()

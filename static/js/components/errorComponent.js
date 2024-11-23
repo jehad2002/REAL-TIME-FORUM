@@ -1,5 +1,4 @@
 export function createErrorPage(statusCode, message, description, container) {
-    // Créez ici le contenu de la page d'erreur en utilisant les paramètres fournis
     const errorElement = document.createElement("div");
     errorElement.style.textAlign = "center";
     errorElement.innerHTML = `
@@ -8,8 +7,6 @@ export function createErrorPage(statusCode, message, description, container) {
         <p> ${description} </p>
     `;
 
-    // Ajoutez le contenu de la page d'erreur au conteneur spécifié
-    //container.innerHTML = "";
     container.appendChild(errorElement);
     document.querySelector('body').appendChild(container)
 }

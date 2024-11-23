@@ -1,20 +1,14 @@
-
 export function createFooterElement(users) {
-  // Créez un élément aside pour représenter la section d'informations du pied de page
   const footerInfoElement = document.createElement("aside");
   footerInfoElement.id = "chat";
   footerInfoElement.classList.add("chatContent", "footer");
   footerInfoElement.style.borderLeft = "1px solid #ccc";
   footerInfoElement.style.borderRight = "1px solid white";
-  //console.log(users);
-  //footerInfoElement.style.width="auto"
-  // Ajoutez le contenu de la section d'informations à l'élément aside
 
   var allUsers = '';
-  // var i =1;
   users.forEach(element => {
     var status;
-    var hasNewMessages = element.UnreadMessages > 0; // Vérifiez si l'utilisateur a des nouveaux messages
+    var hasNewMessages = element.UnreadMessages > 0; 
 
     if (element.Status == 'on') {
       status = 'status'
@@ -22,15 +16,12 @@ export function createFooterElement(users) {
       status = 'status away'
     }
 
-    // Ajoutez la classe 'new-messages' si l'utilisateur a de nouveaux messages
     var userClass = hasNewMessages ? 'friend new-messages' : 'friend';
 
-    // Ajoutez la balise <span class="notification-icon"> uniquement si hasNewMessages est vrai
     var notificationIcon = hasNewMessages ? `<span class="notification-icon">${element.UnreadMessages} <i class="fas fa-envelope"></i></span>` : '';
 
     allUsers += `
           <div class="${userClass}  friend${element.Id} " id="${element.Id}">
-              <!-- Ajoutez l'ID ici -->
               <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/${element.Id}_copy.jpg" />
               <p>
                   <strong>${element.Name}</strong>
@@ -42,7 +33,6 @@ export function createFooterElement(users) {
               <div class="${status}"></div>
           </div>`;
 
-    // i++;
   });
 
   footerInfoElement.innerHTML = `
@@ -73,7 +63,7 @@ export function createFooterElement(users) {
                     <div class="cx"></div>
                 </div>
                 <p>Miro Badev</p>
-                <span>miro@badev@gmail.com</span>
+                <span>jehad@gmail.com</span>
             </div>
 
             <div id="chat-messages">
@@ -134,6 +124,5 @@ export function createFooterElement(users) {
 
     `;
   document.querySelector('main').appendChild(footerInfoElement)
-  // }
 }
 
