@@ -30,7 +30,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	//jsonDataChannel := make(chan controllers.Post)
 	//formDataChannel := make(chan *multipart.Form)
-	//done := make(chan bool) // Canal pour signaler la fin des opérations
+	//done := make(chan bool) 
 
 	go func() {
 		for {
