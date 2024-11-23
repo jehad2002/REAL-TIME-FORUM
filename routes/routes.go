@@ -37,9 +37,9 @@ func SetupRoutes() {
 	http.HandleFunc("/s", controllers.CloseChatHandler)
 	http.HandleFunc("/404", controllers.NotFound)
 
-	fmt.Println(string(colorGreen), "[SERVER_READY] : on http://localhost:8888 ✅ ") 
+	fmt.Println(string(colorGreen), "[SERVER_READY] : on http://localhost:3000 ✅ ") 
 	fmt.Println(string(colorYellow), "[SERVER_INFO] : To stop the program : Ctrl + c \033[00m")
-	err := http.ListenAndServe(":8888", nil)
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
