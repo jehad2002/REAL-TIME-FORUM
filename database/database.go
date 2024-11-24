@@ -138,7 +138,7 @@ func InitCategorie(categories []models.Category) bool {
 	for _, v := range categories {
 		_, err := models.CreateCategory(Database, v)
 		if err != nil {
-			ok = false
+			ok = false	
 		}
 	}
 
