@@ -1,10 +1,11 @@
 package main
 
 import (
+	"real-time-forum/database"
 	"real-time-forum/routes"
 )
 
 func main() {
-	//database.CreateTables()
+	database.CreateTables()
 	routes.SetupRoutes()
 }
