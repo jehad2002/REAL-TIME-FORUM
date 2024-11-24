@@ -1,5 +1,3 @@
--- schema.sql
--- Drop tables if they exist
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Post;
@@ -78,7 +76,7 @@ CREATE TABLE Message (
     Destinataire INTEGER,
     Contenue TEXT,
     Date DATETIME,
-    Lu BOOLEAN DEFAULT 0, -- Ajout du champ "Lu" avec une valeur par défaut de 0 (non lu)
+    Lu BOOLEAN DEFAULT 0,
     FOREIGN KEY (Expediteur) REFERENCES User(id),
     FOREIGN KEY (Destinataire) REFERENCES User(id)
 );
