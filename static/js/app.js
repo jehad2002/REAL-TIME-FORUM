@@ -10,17 +10,16 @@ import { displayMenuButton } from './index.js';
 import { filterByCategories } from './filterCategories.js';
 import { getContentPost, getContentComment, socketConnect, getContentChat, allElementPost } from './socket.js';
 import { searchfieldFunc, friendsChat, windowWidth } from './chat.js';
-import { createComment } from './components/commentComponent.js'; 
+import { createComment } from './components/commentComponent.js';  
 var commentData = null;
 var connectedUserName;
 var connectedUserId;
 var body = document.querySelector('body')
 
 document.addEventListener("DOMContentLoaded", function () {
-    // http://localhost:8888/
-    if (window.location.href == "http://localhost:8888/") {
+    if (window.location.href == "http://localhost:3000/") {
         checkSessionOnLoad();
-    } else if (window.location.href !== "http://localhost:8888/comment") {
+    } else if (window.location.href !== "http://localhost:3000/comment") {
         fetch("/check_session")
         .then(response => response.json())
         .then(data => {
@@ -35,7 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
         .catch(error => {
-            console.error("Error checking the session:", error);
+            console.error("Error verifying session:", error);
+        
         });
     } else {
         loadErrorPage();
@@ -49,14 +49,15 @@ function loadErrorPage() {
         if (response.ok) {
             return response.text(); 
         } else {
-            throw new Error(`Error HTTP ${response.status}`);
+            throw new Error(`Erreur HTTP ${response.status}`);
         }
     })
     .then(data => {
         console.log(data);
     })
     .catch(error => {
-        console.error("Error during the request:", error);
+        console.error("Error during request:", error);
+    
     });
     const errorContainer= document.createElement('div')
     errorContainer.id = 'login-error'
@@ -109,7 +110,8 @@ function checkSessionOnLoad() {
             }
         })
         .catch(error => {
-            console.error("Error during session verification:", error);
+            console.error("Error verifying session:", error);
+            
             loadLoginPage();
         });
 }
@@ -119,6 +121,7 @@ export function loadLoginPage() {
     body.appendChild(loginElement);
     const loginForm = document.getElementById("loginForm");
     loginForm.addEventListener("submit", function (event) {
+        event.preventDefault(); 
         var username = getUserInfos()[0]
         var password = getUserInfos()[1]
         fetch("/login", {
@@ -141,12 +144,13 @@ export function loadLoginPage() {
                 }
             })
             .catch(error => {
-                console.error("Error during connection:", error);
+                console.error("Error while connecting:", error);
+            
             });
         });
     const openPopupSignupLink = document.getElementById("open-popup-signup-link");
     if (openPopupSignupLink) {
-        console.log("ok")
+        console.log("okokokoko")
         openPopupSignupLink.addEventListener("click", function (event) {
             event.preventDefault();
             if (loginElement) {
@@ -155,7 +159,7 @@ export function loadLoginPage() {
             loadRegisterPage();
         });
     } else {
-        console.log("wrong")
+        console.log("errrrrr")
     }
 }
 
@@ -231,9 +235,9 @@ export function loadRegisterPage() {
                     const registerError = document.getElementById("register-error");
                     if (registerError) {
                         registerError.style.color = "red";
-                        registerError.innerText = "The fields 'username', 'lastname', and 'name' must not contain spaces.";
+                        registerError.innerText = "The fields 'username', 'lastname' and 'name' must not contain spaces.";
+                        
                         registerError.style.display = "block";
-                        return; 
                     }
                 }
     
@@ -252,24 +256,25 @@ export function loadRegisterPage() {
                                 registerError.style.display = "block";
                                 registerError.style.color = "green";
                                 registerError.textContent = "Registration successful";
-                            }
+                                        }
                         } else {
                             const registerError = document.getElementById("register-error");
                             if (registerError) {
                                 registerError.style.color = "red";
-                                registerError.innerHTML = "Registration error: " + data.message;
+                                registerError.innerHTML = "Error while registering: " + data.message;
+                                
                                 registerError.style.display = "block";
                             }
                         }
                     })
                     .catch(error => {
-                        console.error("Error sending the request:", error);
-                    });
+                        console.error("Error sending request:", error);
+                            });
             } else {
                 const registerError = document.getElementById("register-error");
                 if (registerError) {
                     registerError.innerText = "Please do not change my ID";
-                    registerError.style.display = "block";
+                        registerError.style.display = "block";
                 }
             }
         });
@@ -305,12 +310,12 @@ if (logoutForm) {
                 if (data.success) {
                     loadLoginPage();
                 } else {
-                    console.error("Error during logout:", data.message);
-                }
+                    console.error("Error while disconnecting:", data.message);
+                                }
             })
             .catch(error => {
-                console.error("Error during logout:", error);
-            });
+                console.error("Error while disconnecting:", error);
+                        });
     });
 }
 
@@ -326,7 +331,7 @@ function loadPosts(postContainer, data) {
             filterByCategories();
             displayMenuButton();
         })
-        .catch(error => console.error("Error fetching posts:", error));
+        .catch(error => console.error("Error retrieving posts:", error));
     }
 
 function loadCategories(postcontainer, isComment) {
@@ -338,7 +343,7 @@ function loadCategories(postcontainer, isComment) {
             searchfieldFunc()
             friendsChat(getContentChat)
         })
-        .catch(error => console.error("Error fetching categories:", error));
+        .catch(error => console.error("Error retrieving categories:", error));
     }
 
 var allPostElement
@@ -409,8 +414,8 @@ export function fetchCommentPost(postId, datas) {
                 //socketConnect(createCommentSection);
             })
             .catch(error => {
-                console.error('Error sending the request:', error);
-            });
+                console.error('Error sending request:', error);
+                        });
     } else {
         loadErrorPage();
     }
@@ -464,7 +469,7 @@ function updateFooter(users) {
 
 function checkBtnCreatePost(postContainer) {
     const buttonPostForm = postContainer.querySelector('.create_post');
-    console.log('Here is the post container');
+    console.log('voici le postcontainer ');
     if (buttonPostForm) {
         console.log('on recupere le bouton create post');
         //console.log(buttonPostForm);
@@ -478,7 +483,6 @@ function checkBtnCreatePost(postContainer) {
     }
 }
 
-
 export function createCommentSection(postContainer, comments, main) {
     if (comments && Array.isArray(comments) && comments.length > 0) {
         comments.forEach(comment => {
@@ -486,9 +490,9 @@ export function createCommentSection(postContainer, comments, main) {
         });
     } else {
         console.error("The variable 'comments' is empty or not an array.");
-        const emptyPostElement = document.createElement('div');
+                const emptyPostElement = document.createElement('div');
         emptyPostElement.innerHTML = "No comments available.";
-        postContainer.appendChild(emptyPostElement);
+                postContainer.appendChild(emptyPostElement);
     }
     getContentComment()
 }

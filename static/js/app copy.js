@@ -2,7 +2,7 @@ import { createPostElement, createPostButton, formPost } from './components/post
 import { createCategoryElement } from './components/categoriesComponent.js';
 import { createFooterElement } from './components/footerComponent.js';
 import { createHeaderElement } from './components/headerComponent.js';
-import { createLoginElement } from './components/loginComponent.js';  
+import { createLoginElement } from './components/loginComponent.js'; 
 import { checkToUploadText, socketConnect } from './formpost.js';
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -22,17 +22,17 @@ function checkSessionOnLoad() {
                 postContainer.innerHTML = "";
                 postContainer.appendChild(createPostButton())
 
+
                 loadPosts();
                 loadCategories();
-
                 createHeaderElement(data.name,data.userID);
             } else {
                 loadLoginPage();
             }
         })
         .catch(error => {
-            http.Error(w, "Internal server error", http.StatusInternalServerError)
-            loadLoginPage();
+            console.error("Error verifying session:", error);
+                        loadLoginPage();
         });
 }
 
@@ -40,12 +40,12 @@ function loadLoginPage() {
     const loginElement = createLoginElement();
 
     const mainContainer = document.getElementById("loginSection");
-    mainContainer.innerHTML = ""; 
+    mainContainer.innerHTML = "";
     mainContainer.appendChild(loginElement);
 
     const loginForm = document.getElementById("loginForm");
     loginForm.addEventListener("submit", function (event) {
-        event.preventDefault();
+        event.preventDefault(); 
 
         const username = document.getElementById("loginUsername").value;
         const password = document.getElementById("loginPassword").value;
@@ -81,8 +81,8 @@ function loadLoginPage() {
                 }
             })
             .catch(error => {
-                console.error("Error during the connection:", error);
-            });
+                console.error("Error while connecting:", error);
+                        });
     });
 
 }
@@ -90,6 +90,7 @@ function loadLoginPage() {
 const logoutForm = document.getElementById("logoutForm");
 
 if (logoutForm) {
+    //console.log("al")
     logoutForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -105,24 +106,25 @@ if (logoutForm) {
                     
                     loadLoginPage();
                 } else {
-                    console.error("Error during logout:", data.message);
-                }
+                    console.error("Error while disconnecting:", data.message);  
+                              }
             })
             .catch(error => {
-                console.error("Error during logout:", err);
-            });
+                console.error("Error while disconnecting:", error);
+                        });
     });
 }else{
-    // console.log("ei")
+    //console.log("ei")
 }
 
 function loadPosts() {
     fetch("/get_all_posts")
         .then(response => response.json())
         .then(posts => {
+
             updatePageContent(posts);
         })
-        .catch(error => console.error("Error fetching posts:", error));
+        .catch(error => console.error("Error retrieving posts:", error));
     }
 
 function loadCategories() {
@@ -132,23 +134,28 @@ function loadCategories() {
         .then(categories => {
             updateCategories(categories);
         })
-        .catch(error => console.error("Error fetching categories:", error));
+        .catch(error => console.error("Error retrieving categories:", error));
     }
 
 function updatePageContent(posts) {
     const postContainer = document.getElementById("postContains");
-
+    //const postContainer = document.getElementById("postsSection");
+    //postContainer.innerHTML = "";
+    //postContainer.appendChild(createPostButton())
     posts.forEach(post => {
         const postElement = createPostElement(post);
         postContainer.appendChild(postElement);
     });
     var element = socketConnect(createPostElement);
+    //const buttonPostForm = document.getElementById('openPostForm');
+    //buttonPostForm.insertBefore(element, )
     if (element) {
         document.getElementById('postContains').insertBefore(element, document.querySelector('.profile-create-post').nextSibling);
     }
 }
 
 function updateCategories(categories) {
+    //const categoriesContainer = document.getElementById("categoriesSection");
     const categoriesContainer = document.querySelector(".categoriesSection");
     categoriesContainer.innerHTML = "";
 

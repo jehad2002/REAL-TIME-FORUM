@@ -181,7 +181,8 @@ function fetchDataChat(destinataire, index, firstLoad) {
             loadChat(data, firstLoad);
         })
         .catch(error => {
-            console.error('Error during the fetch request on chat:', error);
+            console.error('Error while fetching on chat:', error);
+        
         });
 }
 
