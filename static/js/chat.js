@@ -306,44 +306,69 @@ function displayChatContent() {
     if (document.getElementById('chatbtn')) {
         document.getElementById('chatbtn').addEventListener('click', (e) => {
             var chatbox = document.getElementById('chatbox');
-            var mainContainer = document.querySelector('.main-container')
+            var mainContainer = document.querySelector('.main-container');
+            
+            if (!chatbox || !mainContainer) return; // Ensure elements exist before proceeding
+
+            // Adjust layout when chat button is clicked
             chatbox.style.top = '50px';
-            mainContainer.style.marginTop = '45em';
+            mainContainer.style.marginTop = '45em'; // Adjust as needed
             chatbox.style.display = 'block';
-            console.log('success');
-        })
+            console.log('Chat content displayed successfully');
+        });
     }
 }
 
+
 function resetChatContent(windowWidth) {
-    var mainContainer = document.querySelector('.main-container')
+    var mainContainer = document.querySelector('.main-container');
     var chatbox = document.getElementById('chatbox');
-    if (windowWidth > 768 && windowWidth <= 1024 && mainContainer && chatbox) {
-        mainContainer.style.marginTop = '4em';
-        chatbox.style.top = '90px';
-    } else if (mainContainer && chatbox){
-        mainContainer.style.marginTop = '90px';
-        chatbox.style.top = '0px';
+    
+    // Check if the elements exist
+    if (!mainContainer || !chatbox) {
+        console.log('Required elements not found!');
+        return;
     }
+
+    if (windowWidth <= 768) {
+        // For mobile devices
+        mainContainer.style.marginTop = '7em'; // Adjust based on your design
+        chatbox.style.top = '50px'; // Adjust position based on mobile design
+    } else if (windowWidth > 768 && windowWidth <= 1024) {
+        // For tablets
+        mainContainer.style.marginTop = '4em';
+        chatbox.style.top = '90px'; // Adjust according to tablet layout
+    } else {
+        // For desktops
+        mainContainer.style.marginTop = '90px';
+        chatbox.style.top = '0px'; // No offset for desktop view
+    }
+
+    // Ensure search bar is visible for larger screens
     document.querySelector('.seachbar').style.display = 'flex';
-    document.getElementById('chatbtn').style.display = 'none';
+    document.getElementById('chatbtn').style.display = 'none'; // Hide the chat button on desktop
     console.log('Resetting the chat content...');
 }
 
+
 function handleResize() {
     windowWidth = window.innerWidth;
-    var btn = document.querySelector('.menu-button ')
-    var main = document.querySelector('.main-container')
+    var btn = document.querySelector('.menu-button');
+    var main = document.querySelector('.main-container');
+    
     if (windowWidth <= 768) {
+        // For mobile views, hide search bar and show the chat button
         document.querySelector('.seachbar').style.display = 'none';
         document.getElementById('chatbtn').style.display = 'block';
-        main.style.marginTop = '7em'
+        main.style.marginTop = '7em'; // Adjust top margin for mobile view
+
         if (btn) {
-            btn.style.top = '40px'
+            btn.style.top = '40px'; // Position menu button accordingly
         }
-        displayChatContent();
+        
+        displayChatContent(); // Ensure chat content button is set up
     } else {
-        resetChatContent(windowWidth);
+        resetChatContent(windowWidth); // Adjust for desktop/tablet
     }
 }
 

@@ -9,7 +9,7 @@ var nbrPost;
 export var allElementPost
 export const socketConnect = (func) => {
     //alert('in process to connect ...')
-    socket = new WebSocket("ws://localhost:8080/ws");
+    socket = new WebSocket("ws://localhost:3000/ws");
     socket.onopen = function () {
         console.log('Status : You CONNECTED')
     };
@@ -379,5 +379,3 @@ function createElementIsTyping(expediteur) {
         span.textContent = `${username} is typing ...`
     }
 }
-
-
