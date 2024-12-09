@@ -53,20 +53,17 @@ export function createPostElement(post) {
            </div>
         </div>
     `;
-    
 
     return postElement;
 }
 
 export const createPostButton = (userId) => {
-    var createPostBtn = document.createElement('div')
-    createPostBtn.classList.add('profile-create-post')
+    var createPostBtn = document.createElement('div');
+    createPostBtn.classList.add('profile-create-post');
 
     createPostBtn.innerHTML = `
     <div class="profile-image">
-        
         <img class="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/${userId}_copy.jpg" />
-    </div>
     </div>
     <div class="input-box">
         <input class="input-text" type="text" value="Let’s share what's going on your mind..." disabled>
@@ -77,9 +74,9 @@ export const createPostButton = (userId) => {
             Create Post
         </a>
         <i class="fa-solid fa-plus fa-beat fa-2xl" style="color: red;"></i>
-    </button>`
+    </button>`;
 
-    return createPostBtn
+    return createPostBtn;
 }
 
 export const formPost = (categories) => {
@@ -89,56 +86,63 @@ export const formPost = (categories) => {
     form.classList.add('formPost');
     form.method = "post";
     form.enctype = "multipart/form-data";
-    form.style.display = 'none'
-    var contentCtg = ""
+    form.style.display = 'none';
+
+    var contentCtg = "";
     categories.forEach(category => {
-        contentCtg+=`<label><input type="checkbox" name="categorieChecked"
+        contentCtg += `<label><input type="checkbox" name="categorieChecked"
             value="${category.Id}"> ${category.Libelle}</label>
-            <span style= "display: none;">${category.Icon}</span>
-            `
+            <span style= "display: none;">${category.Icon}</span>`;
     });
 
     form.innerHTML = `
-            <div class="postContain">
-                <span class="cancelPostForm">&times;</span>
-                <section class="headPost">
-                    <span style="border-bottom: 3px solid blue;" class="optionPost" id="postText">
-                        <a  id="postLink">
-                            <i class="fas fa-pencil-alt"> </i> Post
+        <div class="postContain">
+            <span class="cancelPostForm">&times;</span>
+            <section class="headPost">
+                <span style="border-bottom: 3px solid blue;" class="optionPost" id="postText">
+                    <a id="postLink">
+                        <i class="fas fa-pencil-alt"> </i> Post
+                    </a>
+                </span>
+                <span style="border-bottom: 1px solid lightgray;" class="optionPost" id="openUploadImVid">
+                    <a id="imagevideoLink">
+                        <i class="fas fa-camera"> </i> Image &amp; Video
+                    </a>
+                </span>
+                <span class="check-categories" id="openCheckCategories">
+                    <div class="checkbox-dropdown">
+                        <a>
+                            <i class="fas fa-list"></i> Select categories
                         </a>
-                    </span>
-                    <span style="border-bottom: 1px solid lightgray;" class="optionPost" id="openUploadImVid">
-                        <a  id="imagevideoLink">
-                            <i class="fas fa-camera"> </i> Image &amp; Video
-                        </a>
-                    </span>
-                    <span class="check-categories" id= "openCheckCategories">
-                        <div class="checkbox-dropdown">
-                            <a >
-                                <i class="fas fa-list"></i> Select categories
-                            </a>
-                            <div id="checkbox-dropdown-content" class="checkbox-dropdown-content">
-                                ${contentCtg}
-                            </div>
+                        <div id="checkbox-dropdown-content" class="checkbox-dropdown-content">
+                            ${contentCtg}
                         </div>
-                    </span>
-                </section>
-                <section class="titlePost">
-                    <input value="" type="text" minlength="5" maxlength="100" placeholder="Title 100 caractere max" name="title" id="titleInput" style="height: 40px; border-radius: 10px;" required>
-                </section>
-                <section class="contentPost">
-                    <textarea name="content" minlength="5" maxlength="1500" id="textareaField" cols="49" rows="14" placeholder="Write your message post  in minimum 5 and  1500 caractere max..."></textarea>
-                    <div class="UploadImVid">
-                        <label for="fileInput">Choose an image or video:</label>
-                        <input type="file" id="fileInput" accept="image/*, video/*" name="uploadsFile">
                     </div>
-                </section>
-            </div>
-            <a>
-                <div style="display: flex;">
-                    <button type="" id="buttonSubmitFormPrincial">Create Post</button>
+                </span>
+            </section>
+            <section class="titlePost">
+                <input value="" type="text" minlength="5" maxlength="100" placeholder="Title 100 characters max" name="title" id="titleInput" style="height: 40px; border-radius: 10px;" required>
+            </section>
+            <section class="contentPost">
+                <textarea name="content" minlength="5" maxlength="1500" id="textareaField" cols="49" rows="14" placeholder="Write your message post in minimum 5 and 1500 characters max..."></textarea>
+                <div class="UploadImVid" id="uploadSection" style="display: none;">
+                    <label for="fileInput">Choose an image or video:</label>
+                    <input type="file" id="fileInput" accept="image/*, video/*" name="uploadsFile">
                 </div>
-            </a>
-            `
-    return form
+            </section>
+        </div>
+        <a>
+            <div style="display: flex;">
+                <button type="" id="buttonSubmitFormPrincial">Create Post</button>
+            </div>
+        </a>
+    `;
+
+    // Add event listener to toggle the image/video upload section
+    form.querySelector('#openUploadImVid').addEventListener('click', () => {
+        const uploadSection = form.querySelector('#uploadSection');
+        uploadSection.style.display = uploadSection.style.display === 'none' ? 'block' : 'none';
+    });
+
+    return form;
 }
