@@ -63,7 +63,7 @@ export function createFooterElement(users) {
                     <div class="cx"></div>
                 </div>
                 <p>Miro Badev</p>
-                <span>jehad@gmail.com</span>
+                <span>jehadalami11@gmail.com</span>
             </div>
 
             <div id="chat-messages">

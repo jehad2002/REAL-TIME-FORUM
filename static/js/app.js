@@ -469,9 +469,9 @@ function updateFooter(users) {
 
 function checkBtnCreatePost(postContainer) {
     const buttonPostForm = postContainer.querySelector('.create_post');
-    console.log('voici le postcontainer ');
+    console.log('Here is the post container');
     if (buttonPostForm) {
-        console.log('on recupere le bouton create post');
+        console.log('Retrieving the create post button');
         //console.log(buttonPostForm);
         buttonPostForm.addEventListener('click', function () {
             const formPost = postContainer.querySelector('.formPost');
